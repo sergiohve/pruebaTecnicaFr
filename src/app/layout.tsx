@@ -1,20 +1,11 @@
 "use client";
 
 import React from "react";
-import {
-  ThemeProvider,
-  CssBaseline,
-  Box,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-} from "@mui/material";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
-
+import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "./hooks/useStore";
 import { createAppTheme } from "./utils/theme";
 import { ReduxProvider } from "./store/StoreContext";
+import Header from "./components/Header/Header";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -26,39 +17,11 @@ function LayoutUI({ children }: RootLayoutProps) {
 
   const muiTheme = createAppTheme(isDarkMode);
 
-  const toggleTheme = () => {
-    dispatch({ type: "ACTIVE_DARK_MODE" });
-  };
-
   return (
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <Box sx={{ flexGrow: 1, minHeight: "100vh" }}>
-        <AppBar position="sticky" elevation={4} color="primary">
-          <Toolbar sx={{ justifyContent: "space-between" }}>
-            <Typography
-              variant="h5"
-              component="div"
-              sx={{ fontWeight: "bold", cursor: "pointer" }}
-              onClick={() => {
-                if (typeof window !== "undefined") {
-                  window.location.href = "/";
-                }
-              }}
-            >
-              Inventario Alliot
-            </Typography>
-
-            <IconButton
-              color="inherit"
-              onClick={toggleTheme}
-              aria-label="alternar modo oscuro"
-            >
-              {isDarkMode ? <Brightness7 /> : <Brightness4 />}
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-
+        <Header />
         <main>{children}</main>
       </Box>
     </ThemeProvider>
