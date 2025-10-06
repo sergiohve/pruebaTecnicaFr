@@ -12,8 +12,10 @@ export default function HomePage() {
     router.push(path);
   };
   const showConfirm = (message: string, onConfirm: () => void) => {
+    if (typeof window !== 'undefined') {
     if (window.confirm(message)) {
       onConfirm();
+    }
     }
   };
 

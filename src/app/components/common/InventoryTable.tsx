@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -41,7 +42,12 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
     if (!isClient) {
       return stock.toString();
     }
-    return new Intl.NumberFormat().format(stock);
+
+    try {
+      return new Intl.NumberFormat().format(stock);
+    } catch (error) {
+      return stock.toString();
+    }
   };
 
   const handleDelete = (id: number, name: string) => {
@@ -52,8 +58,10 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
         dispatch({ type: "DELETE_PRODUCT", payload: id });
       });
     } else {
-      if (window.confirm(message)) {
-        dispatch({ type: "DELETE_PRODUCT", payload: id });
+      if (typeof window !== "undefined") {
+        if (window.confirm(message)) {
+          dispatch({ type: "DELETE_PRODUCT", payload: id });
+        }
       }
     }
   };

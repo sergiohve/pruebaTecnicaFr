@@ -1,15 +1,24 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Paper, Typography, Box, Container, useTheme } from "@mui/material";
-import ReactApexChart from "react-apexcharts"; 
+import dynamic from 'next/dynamic';
 import { ApexOptions } from "apexcharts";
 import { useAppSelector } from "../../hooks/useStore";
 import { Product } from "@/app/types";
 
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { 
+  ssr: false 
+});
+
 const Chart: React.FC = () => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === 'dark'; 
+  const [isClient, setIsClient] = useState(false);
 
   const { products } = useAppSelector((state) => state) as { products: Product[] };
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const productsOrdenados = useMemo(() => 
     products
@@ -126,12 +135,14 @@ const Chart: React.FC = () => {
         </Typography>
         <Box sx={{ minHeight: 400, pt: 2 }}>
           {productsOrdenados.length > 0 ? (
-            <ReactApexChart 
-              options={chartOptions} 
-              series={chartSeries} 
-              type="bar" 
-              height={productsOrdenados.length * 50 + 100}
-            />
+            isClient && (
+              <ReactApexChart 
+                options={chartOptions} 
+                series={chartSeries} 
+                type="bar" 
+                height={productsOrdenados.length * 50 + 100}
+              />
+            )
           ) : (
             <Box
               sx={{

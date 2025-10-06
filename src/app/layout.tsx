@@ -40,7 +40,11 @@ function LayoutUI({ children }: RootLayoutProps) {
               variant="h5"
               component="div"
               sx={{ fontWeight: "bold", cursor: "pointer" }}
-              onClick={() => (window.location.href = "/")}
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.location.href = "/";
+                }
+              }}
             >
               Inventario Alliot
             </Typography>

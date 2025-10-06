@@ -1,8 +1,7 @@
 "use client";
-
-import React from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import DetailEditView from './DetailEditView';
+import React from "react";
+import { useRouter, useParams } from "next/navigation";
+import DetailEditView from "./DetailEditView";
 
 export default function DetailEditPage() {
   const router = useRouter();
@@ -14,16 +13,14 @@ export default function DetailEditPage() {
   };
 
   const showConfirm = (message: string, onConfirm: () => void) => {
-    if (window.confirm(message)) {
-      onConfirm();
+    if (typeof window !== "undefined") {
+      if (window.confirm(message)) {
+        onConfirm();
+      }
     }
   };
 
   return (
-    <DetailEditView
-      id={id}
-      navigate={navigate} 
-      showConfirm={showConfirm}
-    />
+    <DetailEditView id={id} navigate={navigate} showConfirm={showConfirm} />
   );
 }
