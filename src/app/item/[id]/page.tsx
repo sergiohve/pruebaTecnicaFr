@@ -1,16 +1,18 @@
 "use client";
 
 import React from 'react';
+import { useRouter, useParams } from 'next/navigation';
+import DetailEditView from './DetailEditView';
 
-import { useRouter } from 'next/navigation';
-import HomeView from './item/HomeView';
-
-export default function HomePage() {
+export default function DetailEditPage() {
   const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
 
   const navigate = (path: string) => {
     router.push(path);
   };
+
   const showConfirm = (message: string, onConfirm: () => void) => {
     if (window.confirm(message)) {
       onConfirm();
@@ -18,7 +20,8 @@ export default function HomePage() {
   };
 
   return (
-    <HomeView
+    <DetailEditView
+      id={id}
       navigate={navigate} 
       showConfirm={showConfirm}
     />
