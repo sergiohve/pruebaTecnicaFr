@@ -13,8 +13,6 @@ interface RootLayoutProps {
 
 function LayoutUI({ children }: RootLayoutProps) {
   const { isDarkMode } = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
-
   const muiTheme = createAppTheme(isDarkMode);
 
   return (
